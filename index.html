@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>¿Cuánto sabes de mí -.-</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f5f5f5; }
+    h1 { text-align: center; }
+    .question { margin-bottom: 20px; }
+    .result { font-weight: bold; font-size: 1.2em; margin-top: 20px; }
+    button { padding: 10px 20px; font-size: 1em; }
+  </style>
+</head>
+<body>
+  <h1>¿Cuánto sabes de mí -.-</h1>
+  <form id="quizForm">
+    <div class="question">
+      <p>1. ¿Comida favorita de Joaquín?</p>
+      <label><input type="radio" name="q1" value="Mostrito"> Mostrito</label><br>
+      <label><input type="radio" name="q1" value="Ají de gallina"> Ají de gallina</label><br>
+      <label><input type="radio" name="q1" value="Pollo a la brasa"> Pollo a la brasa</label><br>
+      <label><input type="radio" name="q1" value="Chaufa"> Chaufa</label>
+    </div>
+    <div class="question">
+      <p>2. ¿Bebida favorita de Joaquín?</p>
+      <label><input type="radio" name="q2" value="Coca cola"> Coca cola</label><br>
+      <label><input type="radio" name="q2" value="Inka cola"> Inka cola</label><br>
+      <label><input type="radio" name="q2" value="Fanta"> Fanta</label><br>
+      <label><input type="radio" name="q2" value="Sprite"> Sprite</label>
+    </div>
+    <div class="question">
+      <p>3. ¿Hobby de Joaquín?</p>
+      <label><input type="radio" name="q3" value="Jugar fútbol"> Jugar fútbol</label><br>
+      <label><input type="radio" name="q3" value="Tocar algún instrumento"> Tocar algún instrumento</label><br>
+      <label><input type="radio" name="q3" value="Juegos"> Juegos</label><br>
+      <label><input type="radio" name="q3" value="Hueviar"> Hueviar</label>
+    </div>
+    <div class="question">
+      <p>4. ¿Qué estudia Joaquín?</p>
+      <label><input type="radio" name="q4" value="Ing. Sistemas"> Ing. Sistemas</label><br>
+      <label><input type="radio" name="q4" value="Ciencia de datos"> Ciencia de datos</label><br>
+      <label><input type="radio" name="q4" value="Ing. Software"> Ing. Software</label><br>
+      <label><input type="radio" name="q4" value="Ing. Informática"> Ing. Informática</label>
+    </div>
+    <div class="question">
+      <p>5. ¿Cuál es el nombre de la mascota que tuvo Joaquín?</p>
+      <label><input type="radio" name="q5" value="Chuleta"> Chuleta</label><br>
+      <label><input type="radio" name="q5" value="Simba"> Simba</label><br>
+      <label><input type="radio" name="q5" value="Tom"> Tom</label><br>
+      <label><input type="radio" name="q5" value="Sopa seca"> Sopa seca</label>
+    </div>
+    <button type="button" onclick="checkAnswers()">Terminar</button>
+  </form>
+  <div class="result" id="result"></div>
+  <div class="result" id="attempts"></div>
+
+  <script>
+    const correct = {
+      q1: "Pollo a la brasa",
+      q2: "Inka cola",
+      q3: "Jugar fútbol",
+      q4: "Ing. Software",
+      q5: "Chuleta"
+    };
+
+    let attempts = localStorage.getItem('joaquin_attempts') || 0;
+
+    function updateAttempts() {
+      document.getElementById('attempts').innerText = 'N.º de intentos: ' + attempts;
+    }
+
+    function checkAnswers() {
+      let points = 0;
+      for (let key in correct) {
+        const chosen = document.querySelector(`input[name="${key}"]:checked`);
+        if (chosen && chosen.value === correct[key]) {
+          points += 2;
+        }
+      }
+      document.getElementById('result').innerText = 'Puntuación: ' + points + ' / 10';
+      document.querySelectorAll('input').forEach(el => el.disabled = true);
+    }
+
+    window.onload = () => {
+      attempts++;
+      localStorage.setItem('joaquin_attempts', attempts);
+      updateAttempts();
+    };
+  </script>
+</body>
+</html>
